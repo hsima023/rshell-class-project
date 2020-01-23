@@ -1,6 +1,6 @@
 # CS 100 Programming Project
 # Project Information
-Winter 2020
+**Winter 2020**
 
 Name | SID
 ---- | ----
