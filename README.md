@@ -26,4 +26,4 @@ This program will be able to print a command prompt, read in a line of commands 
 # Prototypes/Research
 
 # Development and Testing Road
-assignment-jdhs/issues/2
+[#2](https://github.com/cs100/assignment-jdhs/issues/2)
