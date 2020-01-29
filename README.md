@@ -33,8 +33,10 @@ This program will be able to print a command prompt, read in a line of commands 
 [Implementing token class](https://github.com/cs100/assignment-jdhs/issues/4)
 
 [Implementing class tokenizor](https://github.com/cs100/assignment-jdhs/issues/5)
+
 [Implementing class cmdToken](https://github.com/cs100/assignment-jdhs/issues/6
 )
+
 [Implementing argToken class](https://github.com/cs100/assignment-jdhs/issues/7)
 
 [Implementing class AndToken](https://github.com/cs100/assignment-jdhs/issues/8)
