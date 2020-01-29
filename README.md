@@ -14,13 +14,13 @@ This program will be able to print a command prompt, read in a line of commands 
 ![OMT Diagram](/images/OMT_Diagram.png)
 
 # Classes
-1. class Tokenizer: takes in a string argument, separates string, creates tokens, and returns a vector of tokens.
+1. class Tokenizer: Takes in a string argument, separates string, creates tokens, and returns a vector of tokens.
 2. class Token: Parent class that holds name and virtual void createToken function with several children classes to further specify the command. Each children class will also hold the functions that will be executed.
-  * class cmd: creates a command token and holds functions of commands
-  * class arg: creates an argument token
-  * class and: creates an and token
-  * class or: creates an or token
-  * class pound: creates a pound token
+   * class cmd: Creates a command token and detects what command is written. Executes the various commands.
+   * class arg: Creates an argument token and holds argument.
+   * class and: Creates an and token and executes AND function.
+   * class or: Creates an or token and executes OR function.
+   * class pound: Creates a pound token and executes # function.
 3. class Executor: takes in a vector of tokens and executes each token by calling functions of the token.
 
 # Prototypes/Research
