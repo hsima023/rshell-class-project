@@ -27,18 +27,32 @@ This program will be able to print a command prompt, read in a line of commands 
 
 # Development and Testing Road
 [Implementing main function](https://github.com/cs100/assignment-jdhs/issues/2)
+
 [Declare classes and functions](https://github.com/cs100/assignment-jdhs/issues/3)
+
 [Implementing token class](https://github.com/cs100/assignment-jdhs/issues/4)
+
 [Implementing class tokenizor](https://github.com/cs100/assignment-jdhs/issues/5)
-[Implementing class cmdToken](https://github.com/cs100/assignment-jdhs/issues/6)
+[Implementing class cmdToken](https://github.com/cs100/assignment-jdhs/issues/6
+)
 [Implementing argToken class](https://github.com/cs100/assignment-jdhs/issues/7)
+
 [Implementing class AndToken](https://github.com/cs100/assignment-jdhs/issues/8)
+
 [Implementing class poundToken](https://github.com/cs100/assignment-jdhs/issues/9)
+
 [Implementing orToken class](https://github.com/cs100/assignment-jdhs/issues/10)
+
 [Function to detect semicolon (;)](https://github.com/cs100/assignment-jdhs/issues/11)
+
 [Implementing execute class](https://github.com/cs100/assignment-jdhs/issues/12)
+
 [Implementing command "ls -a" ](https://github.com/cs100/assignment-jdhs/issues/13)
+
 [Implementing exit command](https://github.com/cs100/assignment-jdhs/issues/14)
+
 [Implementing command "echo"](https://github.com/cs100/assignment-jdhs/issues/15)
+
 [Implementing mkdir command function](https://github.com/cs100/assignment-jdhs/issues/16)
+
 [Create unit tests](https://github.com/cs100/assignment-jdhs/issues/17)
