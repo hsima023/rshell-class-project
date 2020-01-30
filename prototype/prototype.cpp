@@ -11,7 +11,7 @@ using namespace std;
 using namespace boost;
 
 int main() {
-	string test = "./test ./test ./test";
+	string test = "./test ./test ./test ./test";
 	char* argv[100];
 	int i = 0;	
 	
@@ -39,21 +39,26 @@ int main() {
 	}
 	
 	cout << "Parsing complete." << endl;
+	
+	pid_t pid[4];
+	//char* argv[] = {"./test", NULL};	
 
-	pid_t pid = fork();
-	//char* argv[] = {"./test", NULL};
+	for (int j = 0; j < 4; ++j) {
+	
+		pid[j] = fork();
 
-	if (pid < 0) {
-		cout << "ERROR." << endl;
-		exit(1);
-	}
-
-	if (pid == 0) {
-		execvp(argv[0], argv);
-	}
-	else if (pid > 0) {
-		wait(NULL);
-		cout << "Child terminated." << endl;
+		if (pid[j] < 0) {
+			cout << "ERROR." << endl;
+			exit(1);
+		}
+	
+		if (pid[j] == 0) {
+			execvp(argv[0], argv);
+		}
+		else {
+			wait(NULL);
+			cout << "Child terminated." << endl;
+		}
 	}
 
 	return 0;

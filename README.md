@@ -24,6 +24,8 @@ This program will be able to print a command prompt, read in a line of commands 
 3. class Executor: takes in a vector of tokens and executes each token by calling functions of the token.
 
 # Prototypes/Research
+We utilized the Boost Tokenizer class to perform our parse. In the prototype, it parses a string with four "./test" separated by spaces. Although it is hardcoded at the moment, we can fix that later for it to work with user input as well as connectors. To work with connectors, we plan to have them added as another token and save them to the argv array.
+The three functions (execvp, waitpid, fork) are working with the hardcoded string mentioned previously. They were able to output all four "./test" correctly. We hope to change the loop so that it may accept an infinite amount of user inputs. 
 
 # Development and Testing Road
 [Implementing main function](https://github.com/cs100/assignment-jdhs/issues/2)
