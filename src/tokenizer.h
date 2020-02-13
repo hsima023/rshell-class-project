@@ -9,7 +9,7 @@ using namespace boost;
 
 void Tokenizer(string userInput,char **argv) {
 	int i = 0;
-        char_separator<char> space(" ","\"\';#");
+        char_separator<char> space(" ","'\"\';#");
         tokenizer<char_separator<char>> token(userInput, space);
 
 	for (const auto& word : token) {
