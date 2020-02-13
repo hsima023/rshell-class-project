@@ -5,7 +5,7 @@
 
 class quoteToken: public Token {
 	public:
-	bool isExist()
+	bool isExist(char **argv)
 	{
         	bool equal =false;
         	for (int i = 0;argv[i] != "\n"; i++){
@@ -16,7 +16,7 @@ class quoteToken: public Token {
         	}
         	return equal;
 	}
-	void logic()
+	void logic(char **argv)
 	{
         	char *quote[] = *argv[];
         	int count = 0;
