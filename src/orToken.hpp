@@ -5,7 +5,7 @@
 
 class orToken: public Token {
 	public:
-	bool isExist()
+	bool isExist(char** argv)
 	{
         	bool equal =false;
         	for (int i = 0;argv[i] != "\n"; i++){

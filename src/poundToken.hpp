@@ -5,7 +5,7 @@
 
 class poundToken: public Token {
 	public:
-	bool isExist(){
+	bool isExist(char** argv){
 		bool equal = false;
 	      	for(int i = 0; argv[i] != "\n"; i++){
               		if(argv[i] == '#'){
@@ -15,7 +15,7 @@ class poundToken: public Token {
       		}
       		return equal;
 	}
-	void logic(){
+	void logic(char** argv){
 		const char *pound[] = { "#"};
         	for(int i = 0; argv[i] != NULL; i++){
                 	if(*argv[i] == *pound[0]){
