@@ -2,8 +2,12 @@
 #define TOKEN_HPP
 
 Class Token {
+	char *argv[];
 	public:
-	virtual void parse() = 0;
+	void setvalue(char **arg){
+	*argv[] = *arg[];}
+	bool isExist() = 0; 
+	void logic() = 0;
 
 };
 
