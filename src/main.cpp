@@ -27,7 +27,7 @@ int main() {
                 	i++;
         	}
 		Executor ex(argv);
-		ex.execute(argv);
+		ex.run(ex, argv);
 
 	}	
 	return 0;

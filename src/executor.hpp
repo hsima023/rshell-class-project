@@ -4,6 +4,7 @@
 #include <iostream>
 #include <sys/types.h>
 #include <sys/wait.h>
+#include <algorithm>
 
 class Executor {
 	public:
@@ -25,6 +26,42 @@ class Executor {
 		else {
 			while (wait(&status) != pid);
 		}
+	}
+
+	void run(Executor ex, char **argv) {	
+		char *temp[1024];
+		
+		string connector = "NULL";
+	
+		const char *Search[] = { "&&", "||", "/;"};
+		
+		for (int i = 0; argv[i] != NULL; ++i) {
+			for (int j = 0; j < 3; ++j) {
+				if (*argv[i] == *Search[j]) {
+					argv[i] = NULL;
+					i++;
+					int k = 0;
+					while (argv[i] != NULL) {
+						temp[k] = argv[i];
+						argv[i] = '\0';
+						i++;
+						k++;
+					}
+					temp[k] = NULL;
+					connector = Search[j];
+
+					break;		
+				}		
+			}
+
+			if (connector != "NULL") {
+				break;
+			}
+		}				
+
+		ex.execute(argv);
+		
+		//ex.run(ex, temp);
 	}
 };	
 #endif	
