@@ -1,18 +1,41 @@
-#include "andToken.h"
-#include "Executor.h"
+#ifndef AND_TOKEN_HPP
+#define AND_TOKEN_HPP
 
-void andToken::logic(char **argv){
-	Executor ex(argv);
-       	for (int i = 0;argv[i] != null;  i++){
-            if(argv[i] == "&&" && argv[0] != "&&" ){
-                   if (ex.execute(argv[i - 1]){
-                            ex.execute(argv[i + 1]);
-                   }
-                   else {
-                          exit(1);
-                   }
-             }
-         }
-}
+#include "token.hpp"
+
+class andToken: public Token {
+	public:
+	bool isExist()
+	{
+        	bool equal =false;
+        	for (int i = 0;argv[i] != "\n"; i++){
+                	if(argv[i] == "&&"){
+                        	equal = true;
+                        	break;
+                	}
+        	}
+        	return equal;
+	}
+	void logic()
+	{
+        	char *temp[4];
+        	const char *And[] = { "&&"};
+        	for(int i = 0; argv[i] != NULL; i++){
+                	if(*argv[i] == *And[0]){
+                        	argv[i] = NULL;
+                        	i++;
+                        	while(argv[i] != NULL){
+                                	int j = 0;
+                                	temp[j] = argv[i];
+                                	argv[i] = NULL;
+                                	i++;
+                                	j++;
+                        	}	
+                	break;
+                	}
+        	}
+	}
+
 };
 
+#endif
