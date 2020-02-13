@@ -29,6 +29,11 @@ class Executor {
 	}
 
 	void run(Executor ex, char **argv) {	
+		
+		if (argv[0] == NULL) {
+			return;
+		}
+
 		char *temp[1024];
 		
 		string connector = "NULL";
@@ -43,7 +48,7 @@ class Executor {
 					int k = 0;
 					while (argv[i] != NULL) {
 						temp[k] = argv[i];
-						argv[i] = '\0';
+						argv[i] = NULL;
 						i++;
 						k++;
 					}
@@ -61,7 +66,7 @@ class Executor {
 
 		ex.execute(argv);
 		
-		//ex.run(ex, temp);
+		ex.run(ex, temp);
 	}
 };	
 #endif	
