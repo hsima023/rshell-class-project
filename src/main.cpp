@@ -28,7 +28,6 @@ int main() {
         	}
 		Executor ex(argv);
 		ex.run(ex, argv);
-		delete []argv;
 	}	
 	return 0;
 }

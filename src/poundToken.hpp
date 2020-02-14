@@ -20,21 +20,14 @@ class poundToken: public Token {
 	void logic(char** argv){
 		//const char *pound[] = { "#"};
 		quoteToken quo;
-		int index = -1;
+		int index1 = -1;
 		int index2 = -1;
-        	for(int i = 0; argv[i] != NULL; i++){
-			if ((*argv[i] == '\"' || *argv[i] == '\'') && quo.isExist(argv) && index < 0) {
-				index = i;	
-				++i;
-			}
-			if ((*argv[i] == '\"' || *argv[i] == '\'') && quo.isExist(argv) && index != -1) {
-                                index2 = i;
-				break;	
-                        }
+		if (quo.isExist(argv)) {
+			quo.findIndex(index1, index2, argv);
 		}
 		for (int j = 0; argv[j] != NULL; j++) {
 			if(*argv[j] == '#'){
-                 	       	if (index < j && index2 > j) {
+                 	       	if (index1 < j && index2 > j) {
 					return;
 				}
 	
