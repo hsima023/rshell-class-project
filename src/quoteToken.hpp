@@ -5,34 +5,43 @@
 
 class quoteToken: public Token {
 	public:
-	bool isExist()
+	bool isExist(char **argv)
 	{
-        	bool equal =false;
-        	for (int i = 0;argv[i] != "\n"; i++){
-                	if(argv[i] == "||"){
-                        	equal = true;
-                        	break;
-                	}
-        	}
-        	return equal;
-	}
-	void logic()
-	{
-        	char *quote[] = *argv[];
-        	int count = 0;
-        	for(;;){
-                	if(*quote == '\'' || *quote == '\"'){
-                        	int q = *quote++;
-                        	char *start = quote;
+        	bool equal1 = false;
+		bool equal2 = false;
 
-                        	while(*quote && *quote != q){
-                                	quote++;
-                        	}
-                        	if(*quote == '\0'){
-                                	cout << "ERROR: Unmatched quote!\n";
-                        	}
-                        	count += token(start, quote);
-                        	quote++;
+		const char* quotation = "\"";
+
+        	for (int i = 0; argv[i] != NULL; i++){
+                	if(*argv[i] == *quotation && equal1 == false){
+                        	equal1 = true;
+                	}
+			if (*argv[i] == *quotation && equal1 == true) {
+				equal2 = true;
+				break;
+			}	
+        	}
+        	return equal2;
+	}
+	void logic(char **argv)
+	{
+        	const char* quotation = "\"";
+		//char *quote[] = *argv[];
+        	int count = 0;
+		char *temp;
+        	for(int i = 0; argv[i] != NULL; ++i){
+                	if(*argv[i] == '\'' || *argv[i] == '\"') {
+				for (int j = i + 1; *argv[j] != *quotation; j++) {
+					argv[i] = argv[j];
+					argv[j] = NULL;
+					i++;
+					if(argv[j + 1] == NULL){
+                                		cout << "ERROR: Unmatched quote!\n";
+						return;
+                      			}
+				}
+				//*argv[i] = *temp;
+				return;	
                         }
         	}
 	}	

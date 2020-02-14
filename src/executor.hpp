@@ -5,6 +5,11 @@
 #include <sys/types.h>
 #include <sys/wait.h>
 #include <algorithm>
+#include "token.hpp"
+#include "poundToken.hpp"
+//#include "orToken.hpp"
+//#include "andToken.hpp"
+#include "quoteToken.hpp"
 
 class Executor {
 	public:
@@ -29,7 +34,14 @@ class Executor {
 	}
 
 	void run(Executor ex, char **argv) {	
-		
+
+		//Token pound = new poundToken();
+
+		//if (pound.isExist(argv)) {
+		//	pound.logic(argv);
+		//}
+
+
 		if (argv[0] == NULL) {
 			return;
 		}
@@ -63,6 +75,12 @@ class Executor {
 				break;
 			}
 		}				
+		
+		quoteToken quote;
+
+                if (quote.isExist(argv)) {
+                        quote.logic(argv);
+                }
 
 		ex.execute(argv);
 		
