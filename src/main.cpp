@@ -16,7 +16,7 @@ int main() {
 	while(1){
 		cout << "$ ";
 		getline(cin, userInput);	
-		char *argv[1024];
+		char** argv = new char*[1024];
 		Tokenizer(userInput, argv);
 		if (strcmp(argv[0], "exit") == 0){
 			exit(EXIT_SUCCESS);
@@ -28,7 +28,7 @@ int main() {
         	}
 		Executor ex(argv);
 		ex.run(ex, argv);
-
+		delete []argv;
 	}	
 	return 0;
 }

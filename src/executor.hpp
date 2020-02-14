@@ -35,21 +35,27 @@ class Executor {
 
 	void run(Executor ex, char **argv) {	
 
-		//Token pound = new poundToken();
+		poundToken pound;
 
-		//if (pound.isExist(argv)) {
-		//	pound.logic(argv);
-		//}
+		if (pound.isExist(argv)) {
+			pound.logic(argv);
+		}
 
 
 		if (argv[0] == NULL) {
 			return;
 		}
 
-		char *temp[1024];
+		char **temp = new char*[1024];
 		
 		string connector = "NULL";
 	
+		quoteToken quote;
+
+                if (quote.isExist(argv)) {
+                        quote.logic(argv);
+                }
+
 		const char *Search[] = { "&&", "||", "/;"};
 		
 		for (int i = 0; argv[i] != NULL; ++i) {
@@ -76,22 +82,22 @@ class Executor {
 			}
 		}				
 		
-		poundToken pound;
+		/*poundToken pound;
 
                 if (pound.isExist(argv)) {
                         pound.logic(argv);
-                }
+                }*/
 
-		quoteToken quote;
+		/*quoteToken quote;
 
                 if (quote.isExist(argv)) {
                         quote.logic(argv);
-                }
-
+                }*/
+		
 		ex.execute(argv);
 		
 		ex.run(ex, temp);
-		
+		delete [] temp;
 	}
 };	
 #endif	
