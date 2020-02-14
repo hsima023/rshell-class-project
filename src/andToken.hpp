@@ -5,7 +5,7 @@
 
 class andToken: public Token {
 	public:
-	bool isExist()
+	bool isExist(char **argv)
 	{
         	bool equal =false;
         	for (int i = 0;argv[i] != "\n"; i++){
@@ -16,7 +16,7 @@ class andToken: public Token {
         	}
         	return equal;
 	}
-	void logic()
+	void logic(char **argv)
 	{
         	char *temp[4];
         	const char *And[] = { "&&"};
