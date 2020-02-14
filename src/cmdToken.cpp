@@ -1,18 +1,31 @@
-#include "cmdToken.h"
-#include "executor.h"
+#ifndef CMD_TOKEN_HPP
+#define CMD_TOKEN_HPP
+
+#include "token.hpp"
 #include <iostream>
 
-void cmdToken::logic(char **argv) 
-{ 
-	Executor ex(argv);
-	for (int i = 0; argv[i] != null; i++){
-		if(argv[i] == "ls" || argv[i] == "mkdir" || argv[i] == "echo" ||argv[i] == "git"){
-			ex.execute();
+class cmdToken: public Token {
+	public:
+	bool isExist(char **argv, int num)
+	{
+		bool equal = false;
+		const char *Search[] = { "ls" , "mkdir" , "echo" , "git", "rm"};
+		const char *invalid[] = { "-j"};
+		int ind = num;
+		for(int i = 0; i < 5; i++){
+			if(*Search[i] == *argv[ind]){
+				equal = true;
+				break;
+			}
 		}
-		else {
-			exit(1);
-		}
+		//int j = 0;
+		//if((*Search[j] == *argv[ind] && *invalid[j] == *argv[ind++])==0){
+		//	equal = false;
+	//	}
+		return equal;
 	}
-}
+};
+
+#endif
 
 
