@@ -76,6 +76,12 @@ class Executor {
 			}
 		}				
 		
+		poundToken pound;
+
+                if (pound.isExist(argv)) {
+                        pound.logic(argv);
+                }
+
 		quoteToken quote;
 
                 if (quote.isExist(argv)) {
@@ -85,6 +91,7 @@ class Executor {
 		ex.execute(argv);
 		
 		ex.run(ex, temp);
+		
 	}
 };	
 #endif	

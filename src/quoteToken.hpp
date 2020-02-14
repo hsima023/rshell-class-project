@@ -27,20 +27,37 @@ class quoteToken: public Token {
 	{
         	const char* quotation = "\"";
 		//char *quote[] = *argv[];
-        	int count = 0;
 		char *temp;
+		bool mark = false;
         	for(int i = 0; argv[i] != NULL; ++i){
                 	if(*argv[i] == '\'' || *argv[i] == '\"') {
-				for (int j = i + 1; *argv[j] != *quotation; j++) {
+				for (int j = i + 1; argv[j] != NULL; j++) {
+
 					argv[i] = argv[j];
-					argv[j] = NULL;
+					
+					if(*argv[i] == '\"' || *argv[i] == '\''){
+						mark = true;
+					}
+					
+					while ((*argv[i] == '\"' || *argv[i] == '\'') && argv[++j] != NULL) {
+                                                argv[i] = argv[j];
+                                        }
+
+
 					i++;
-					if(argv[j + 1] == NULL){
-                                		cout << "ERROR: Unmatched quote!\n";
-						return;
-                      			}
 				}
-				//*argv[i] = *temp;
+				if (*argv[i - 1] == '\"' || *argv[i - 1] == '\'') {
+					--i;
+				}
+				while (argv[i] != NULL) {
+					argv[i++] = NULL;
+				}
+	
+				if (!mark) {
+					cout << "ERROR: Unmatched quote!\n";
+                                        return;
+                                }
+
 				return;	
                         }
         	}
