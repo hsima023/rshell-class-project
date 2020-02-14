@@ -62,5 +62,20 @@ class quoteToken: public Token {
                         }
         	}
 	}	
+	
+	void findIndex(int &index1, int &index2, char** argv) {
+                for(int i = 0; argv[i] != NULL; i++){
+                        if ((*argv[i] == '\"' || *argv[i] == '\'') && index1 < 0) {
+		               index1 = i;
+                                ++i;
+                        }
+                        if ((*argv[i] == '\"' || *argv[i] == '\'') && index1 != -1) {
+                                index2 = i;
+				return;
+                        }
+                }
+	}
+
+	
 };
 #endif
