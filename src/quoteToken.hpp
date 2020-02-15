@@ -5,29 +5,23 @@
 
 class quoteToken: public Token {
 	public:
-	bool isExist(char **argv)
+	bool isExist(char **argv, int num)
 	{
-        	bool equal1 = false;
-		bool equal2 = false;
-
+		bool equal = false;
 		const char* quotation = "\"";
 
-        	for (int i = 0; argv[i] != NULL; i++){
-                	if(*argv[i] == *quotation && equal1 == false){
-                        	equal1 = true;
-                	}
-			if (*argv[i] == *quotation && equal1 == true) {
-				equal2 = true;
-				break;
-			}	
+		if (*argv[num] == *quotation) {
+			equal = true;
         	}
-        	return equal2;
+        	return equal;
 	}
-	void logic(char **argv)
+	void logic(char **argv, char **temp)
 	{
-        	const char* quotation = "\"";
-		//char *quote[] = *argv[];
-		char *temp;
+		int index = -1;
+		const char *sm[] = {";"};
+		const char *nd[] = {"&&"};
+		const char *rt[] = {"||"};
+		const char *pnd[] = {"#"};
 		bool mark = false;
         	for(int i = 0; argv[i] != NULL; ++i){
                 	if(*argv[i] == '\'' || *argv[i] == '\"') {
@@ -35,8 +29,9 @@ class quoteToken: public Token {
 
 					argv[i] = argv[j];
 					
-					if(*argv[i] == '\"' || *argv[i] == '\''){
+					if((*argv[i] == '\"' || *argv[i] == '\'') && index < 0){
 						mark = true;
+						index = i;
 					}
 					
 					while ((*argv[i] == '\"' || *argv[i] == '\'') && argv[++j] != NULL) {
@@ -49,17 +44,40 @@ class quoteToken: public Token {
 				if (*argv[i - 1] == '\"' || *argv[i - 1] == '\'') {
 					--i;
 				}
+					
 				while (argv[i] != NULL) {
 					argv[i++] = NULL;
 				}
 	
-				if (!mark) {
+				/*if (!mark) {
 					cout << "ERROR: Unmatched quote!\n";
                                         return;
-                                }
+                                }*/
+				
+				if (argv[index] != NULL) {
+
+				for (int m = index; argv[m] != NULL; ++m) {
+					if (*argv[m] == *nd[0] || *argv[m] == *pnd[0] || *argv[m] == *sm[0] || *argv[m] == *rt[0]) {
+						index = m - 1;
+					}
+				}		
+
+                		for(int k = index; argv[k] != NULL; ++k){
+                                	//argv[k] = NULL;
+                                	k++;
+                                	int l = 0;
+                                	while(argv[k] != NULL){
+                                        	temp[l] = argv[k];
+                                        	argv[k] = NULL;
+                                        	k++;
+                                        	l++;
+                                	}
+                                temp[l] = NULL;
 
 				return;	
-                        }
+                        	}
+				}
+			}
         	}
 	}	
 	

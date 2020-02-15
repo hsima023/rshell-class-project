@@ -6,6 +6,7 @@
 
 class orToken: public Token {
 	public:
+	orToken() { }
 	bool isExist(char** argv, int num)
 	{
         	bool equal =false;
@@ -22,7 +23,6 @@ class orToken: public Token {
 	void logic(char **argv, char **temp)
 	{
         	const char *Or[] = { "||"};
-		string connector = "NULL";
         	for(int i = 0; argv[i] != NULL; i++){
                 	if(*argv[i] == *Or[0]){
                         	argv[i] = NULL;

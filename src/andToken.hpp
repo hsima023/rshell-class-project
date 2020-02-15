@@ -5,6 +5,7 @@
 
 class andToken: public Token {
 	public:
+	andToken() { }
 	bool isExist(char **argv, int num)
 	{
         	bool equal =false;

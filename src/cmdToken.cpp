@@ -24,6 +24,9 @@ class cmdToken: public Token {
 	//	}
 		return equal;
 	}
+
+	void logic(char **argv, char **temp) {
+	}
 };
 
 #endif

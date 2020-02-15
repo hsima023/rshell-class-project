@@ -1,13 +1,11 @@
 #ifndef TOKEN_HPP
 #define TOKEN_HPP
 
-Class Token {
-	char *argv[];
+class Token {
 	public:
-	void setvalue(char **arg){
-	*argv[] = *arg[];}
-	bool isExist() = 0; 
-	void logic() = 0;
+	Token() {};	
+	virtual bool isExist(char** argv, int num) = 0; 
+	virtual void logic(char** argv, char** temp) = 0;
 
 };
 
