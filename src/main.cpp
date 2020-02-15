@@ -195,7 +195,7 @@ void run(char **argv, bool nvalue, bool orvalue)
 		for(k = index; argv[k] != NULL; ++k){
 			k++;
                         int l = 0;
-                       while(argv[k] != NULL){
+                        while(argv[k] != NULL){
                         	temp[l] = argv[k];
                         	argv[k] = NULL;
                         	k++;	
@@ -228,7 +228,6 @@ void run(char **argv, bool nvalue, bool orvalue)
                                                 temp[k + 1] = NULL;
                                         }
                                 }
-
                                 execute(argv);
                                 run (temp, nswitch, orswitch);
                                 return;
