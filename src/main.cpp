@@ -64,7 +64,10 @@ void run(char **argv, bool nvalue, bool orvalue)
 	if (argv[0] == NULL){
 		return;
 	}
-	
+	const char *semicolon[] = {";"};
+        const char *andsign[] = {"&&"};
+        const char *orsign[] = {"||"};
+        const char *pound[] = {"#"};
 	char *temp[1024];
 	
 	bool nswitch = nvalue;
@@ -151,7 +154,6 @@ void run(char **argv, bool nvalue, bool orvalue)
 		int z = 0;
 		while(argv[z] != NULL){
 			if(rt.isExist(argv, z)){
-				cout << "hi";
 				rt.logic(argv, temp);
 				orswitch = true;
 				run (temp, nswitch, orswitch);
@@ -179,7 +181,59 @@ void run(char **argv, bool nvalue, bool orvalue)
 		cout << "ERROR: Invalid Command!"<< endl;
 		return;
 		}*/
-		execute(argv);
+		//execute(argv);
+		k = 0;
+		int index = -1;
+		for (k = 0; argv[k] != NULL; ++k) {
+			if (*argv[k] == *andsign[0] || *argv[k] == *pound[0] || *argv[k] == *semicolon[0] || *argv[k] == *orsign[0]) {
+			index = k - 1;
+			break;
+			
+			}
+		}
+
+		for(k = index; argv[k] != NULL; ++k){
+			k++;
+                        int l = 0;
+                       while(argv[k] != NULL){
+                        	temp[l] = argv[k];
+                        	argv[k] = NULL;
+                        	k++;	
+                        	l++;
+                        }
+		
+                        temp[l] = NULL;
+			break;
+		}
+		k = 0;
+		if (temp[0] != NULL) {
+                                        if (nd.isExist(temp, 0) == true) {
+                                                nswitch = false;
+                                                for (k = 0; temp[k] != NULL; k++) {
+                                                        temp[k] = temp[k + 1];
+                                                }
+                                                temp[k + 1] = NULL;
+                                        }
+                                        else if (rt.isExist(temp, 0) == true) {
+                                                orswitch = true;
+                                                for (k = 0; temp[k] != NULL; k++) {
+                                                        temp[k] = temp[k + 1];
+                                                }
+                                                temp[k + 1] = NULL;
+                                        }
+                                        else if (sm.isExist(temp, 0) == true) {
+                                                for (k = 0; temp[k] != NULL; k++) {
+                                                        temp[k] = temp[k + 1];
+                                                }
+                                                temp[k + 1] = NULL;
+                                        }
+                                }
+
+                                execute(argv);
+                                run (temp, nswitch, orswitch);
+                                return;
+			 
+	
 	}
 }
 
