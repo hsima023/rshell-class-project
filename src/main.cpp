@@ -49,10 +49,10 @@ int main() {
                 int i = 0;
 		bool nvalue = true;
 		bool orvalue = true;
-                while (arg[i] != NULL) {
-                        cout << arg[i] << endl;
+                /*while (arg[i] != NULL) {
+                       cout << arg[i] << endl;
                         i++;
-             	}
+             	}*/
 		run(arg, nvalue, orvalue);
                
 	}
