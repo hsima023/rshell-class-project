@@ -140,10 +140,13 @@ void run(char **argv, bool nvalue, bool orvalue)
 		//			break;
 		//		}
 		//		else {
-					execute(argv);
-					run(temp, nswitch, orswitch);
-					delarray(temp);
-					return;
+				execute(argv);
+				if(*argv[0] == *invalid[0] && *argv[1] == *invalid[1]){
+					nswitch = false;
+				}				
+				run(temp, nswitch, orswitch);
+				delarray(temp);
+				return;
 			}
 			else if((sm.isExist(argv, i)) == true){
 				sm.logic(argv, temp);
@@ -170,6 +173,27 @@ void run(char **argv, bool nvalue, bool orvalue)
 	}
 	else if ((cmd.isExist(argv, 0)) == false && nswitch == true && orswitch == true) {
 		perror(argv);
+		for(int q = 0; argv[q] != NULL; q++){
+			if(rt.isExist(argv, q)){
+    				rt.logic(argv, temp);
+                                run (temp, nswitch, orswitch);
+                                delarray(temp);
+                                return;
+                        }
+                        if(nd.isExist(argv, q)){
+                                nd.logic(argv, temp);
+              			nswitch = false;
+                                run(temp, nswitch, orswitch);
+                                delarray(temp);
+                                return;
+                        }
+                        if(sm.isExist(argv, q)){
+                                sm.logic(argv, temp);
+                                run(temp, nswitch, orswitch);
+                                delarray(temp);
+                                return;
+                        }
+		}
 	}
 	else if ((cmd.isExist(argv, 0)) == false || nswitch ==false || orswitch == false){
 		int z = 0;
@@ -201,7 +225,7 @@ void run(char **argv, bool nvalue, bool orvalue)
 			}
 			z++;
 		}
-		if (argv[z] == NULL && orswitch == false) {
+		if (argv[z] == NULL && (orswitch == false || nswitch == false)) {
 		//cout << "ERROR: Invalid Command!"<< endl;
 		return;
 		}
