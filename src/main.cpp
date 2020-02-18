@@ -59,6 +59,17 @@ int main() {
         return 0;
 }
 
+void perror(char **argv)
+{
+	cout << "-bash: " << argv[0] <<": command not found" << endl;
+}
+
+void delarray(char **arr){
+	for(int place = 0;arr[place] != NULL; ++place){
+		arr[place] = NULL;
+	}
+}
+
 void run(char **argv, bool nvalue, bool orvalue)
 {
 	if (argv[0] == NULL){
@@ -68,6 +79,7 @@ void run(char **argv, bool nvalue, bool orvalue)
         const char *andsign[] = {"&&"};
         const char *orsign[] = {"||"};
         const char *pound[] = {"#"};
+	const char *invalid[] = {"ls","-j"};
 	char *temp[1024];
 	
 	bool nswitch = nvalue;
@@ -90,7 +102,7 @@ void run(char **argv, bool nvalue, bool orvalue)
 				execute(argv);
 				return;
 			}
-			if((qt.isExist(argv, i)) == true){
+			else if((qt.isExist(argv, i)) == true){
 				qt.logic(argv, temp);
 	
 				if (temp[0] != NULL) {
@@ -118,9 +130,10 @@ void run(char **argv, bool nvalue, bool orvalue)
 
 				execute(argv);
 				run (temp, nswitch, orswitch);
+				delarray(temp);
 				return;
 			}
-			if((nd.isExist(argv, i)) == true){
+			else if((nd.isExist(argv, i)) == true){
 				nd.logic(argv, temp);
 		///		if((cmd.isExist(argv, 0)) == false){
 		//			cout << "ERROR: Invalid Command!"<< endl;
@@ -129,19 +142,25 @@ void run(char **argv, bool nvalue, bool orvalue)
 		//		else {
 					execute(argv);
 					run(temp, nswitch, orswitch);
+					delarray(temp);
 					return;
 			}
-			if((sm.isExist(argv, i)) == true){
+			else if((sm.isExist(argv, i)) == true){
 				sm.logic(argv, temp);
 				execute(argv);
 				run(temp, nswitch, orswitch);
+				delarray(temp);
 				return;
 			}
-			if((rt.isExist(argv, i)) == true){
+			else if((rt.isExist(argv, i)) == true){
 				rt.logic(argv, temp);
 				execute(argv);
 				orswitch = false;
+				if( *argv[0] == *invalid[0] && *argv[1] == *invalid[1]){
+                                        orswitch = true;
+                                }
 				run(temp, nswitch, orswitch);
+				delarray(temp);
 				return;
 			}
 		}
@@ -149,14 +168,17 @@ void run(char **argv, bool nvalue, bool orvalue)
 			execute(argv);
 		}
 	}
-
+	else if ((cmd.isExist(argv, 0)) == false && nswitch == true && orswitch == true) {
+		perror(argv);
+	}
 	else if ((cmd.isExist(argv, 0)) == false || nswitch ==false || orswitch == false){
 		int z = 0;
 		while(argv[z] != NULL){
 			if(rt.isExist(argv, z)){
 				rt.logic(argv, temp);
-				orswitch = true;
+				orswitch = false;
 				run (temp, nswitch, orswitch);
+				delarray(temp);
 				return;
 			}
 			if(nd.isExist(argv, z)){
@@ -164,6 +186,7 @@ void run(char **argv, bool nvalue, bool orvalue)
 				if(orswitch == false) orswitch = true;
 				if((cmd.isExist(argv, 0)) == false && nswitch == true) nswitch = false;
 				run(temp, nswitch, orswitch);
+				delarray(temp);
 				return;
 			}
 			if(sm.isExist(argv, z)){
@@ -173,14 +196,15 @@ void run(char **argv, bool nvalue, bool orvalue)
 				}
 				orswitch = true;
 				run(temp, nswitch, orswitch);
+				delarray(temp);
 				return;
 			}
 			z++;
 		}
-		/*if (argv[z] == NULL) {
-		cout << "ERROR: Invalid Command!"<< endl;
+		if (argv[z] == NULL && orswitch == false) {
+		//cout << "ERROR: Invalid Command!"<< endl;
 		return;
-		}*/
+		}
 		//execute(argv);
 		k = 0;
 		int index = -1;
@@ -230,6 +254,7 @@ void run(char **argv, bool nvalue, bool orvalue)
                                 }
                                 execute(argv);
                                 run (temp, nswitch, orswitch);
+				delarray(temp);
                                 return;
 			 
 	
