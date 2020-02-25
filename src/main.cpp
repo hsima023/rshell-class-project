@@ -13,6 +13,7 @@
 #include "orToken.hpp"
 #include "cmdToken.cpp"
 #include "smcolonToken.hpp"
+#include "parenToken.hpp"
 
 using namespace std;
 using namespace boost;
@@ -80,6 +81,7 @@ void run(char **argv, bool nvalue, bool orvalue)
         const char *orsign[] = {"||"};
         const char *pound[] = {"#"};
 	const char *invalid[] = {"ls","-j"};
+	const char *test[] = {"test"};
 	char *temp[1024];
 	
 	bool nswitch = nvalue;
@@ -91,15 +93,46 @@ void run(char **argv, bool nvalue, bool orvalue)
 	orToken rt;
 	cmdToken cmd;
 	smcolonToken sm;
+	parenToken paren;
 
 	int i;
 	int k;
 
-	if(((cmd.isExist(argv, 0)) == true || (pnd.isExist(argv, 0)) == true)&& (nswitch == true && orswitch == true)){
+	if(((cmd.isExist(argv, 0)) == true || (pnd.isExist(argv, 0)) == true || (paren.isExist(argv, 0)) == true) && (nswitch == true && orswitch == true)){
 		for(i = 0; argv[i] != NULL; ++i){
 			if((pnd.isExist(argv, i)) == true){
 				pnd.logic(argv, temp);
 				execute(argv);
+				return;
+			}
+			else if ((paren.isExist(argv, i)) == true) {
+				paren.logic(argv, temp);
+				//execute(argv);
+				run(argv, nswitch, orswitch);
+				if (temp[0] != NULL) {
+					if (nd.isExist(temp, 0) == true) {
+                                                nswitch = true;
+                                                for (k = 0; temp[k] != NULL; k++) {
+                                                        temp[k] = temp[k + 1];
+                                                }
+                                                temp[k + 1] = NULL;
+                                        }
+                                        else if (rt.isExist(temp, 0) == true) {
+                                                orswitch = false;
+                                                for (k = 0; temp[k] != NULL; k++) {
+                                                        temp[k] = temp[k + 1];
+                                                }
+                                                temp[k + 1] = NULL;
+                                        }
+                                        else if (sm.isExist(temp, 0) == true) {
+                                                for (k = 0; temp[k] != NULL; k++) {
+                                                        temp[k] = temp[k + 1];
+                                                }
+                                                temp[k + 1] = NULL;
+                                        }
+				}
+				run(temp, nswitch, orswitch);
+				delarray(temp);
 				return;
 			}
 			else if((qt.isExist(argv, i)) == true){
@@ -167,9 +200,9 @@ void run(char **argv, bool nvalue, bool orvalue)
 				return;
 			}
 		}
-		if (argv[i] == NULL) {
+		//if (argv[i] = NULL) {
 			execute(argv);
-		}
+		//}
 	}
 	else if ((cmd.isExist(argv, 0)) == false && nswitch == true && orswitch == true) {
 		perror(argv);
