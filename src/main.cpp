@@ -80,7 +80,7 @@ void run(char **argv, bool nvalue, bool orvalue)
         const char *andsign[] = {"&&"};
         const char *orsign[] = {"||"};
         const char *pound[] = {"#"};
-	const char *invalid[] = {"ls","-j"};
+	const char *invalid[] = {"ls", "-j"};
 	const char *test[] = {"test"};
 	char *temp[1024];
 	
@@ -174,7 +174,7 @@ void run(char **argv, bool nvalue, bool orvalue)
 		//		}
 		//		else {
 				execute(argv);
-				if(*argv[0] == *invalid[0] && *argv[1] == *invalid[1]){
+				if (strcmp(argv[0], invalid[0]) == 0 && strcmp(argv[1], invalid[1]) == 0) {
 					nswitch = false;
 				}				
 				run(temp, nswitch, orswitch);
@@ -192,7 +192,7 @@ void run(char **argv, bool nvalue, bool orvalue)
 				rt.logic(argv, temp);
 				execute(argv);
 				orswitch = false;
-				if( *argv[0] == *invalid[0] && *argv[1] == *invalid[1]){
+				if( strcmp(argv[0], invalid[0]) == 0 && strcmp(argv[1], invalid[1]) == 0){
                                         orswitch = true;
                                 }
 				run(temp, nswitch, orswitch);

@@ -10,7 +10,6 @@ class cmdToken: public Token {
 	{
 		bool equal = false;
 		const char *Search[] = { "ls" , "mkdir" , "echo" , "git", "rm"};
-		const char *invalid[] = { "-j"};
 		int ind = num;
 		for(int i = 0; i < 5; i++){
 			if(*Search[i] == *argv[ind]){
