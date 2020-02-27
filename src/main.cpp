@@ -14,6 +14,8 @@
 #include "cmdToken.cpp"
 #include "smcolonToken.hpp"
 #include "parenToken.hpp"
+#include "testToken.hpp"
+#include "bracketToken.hpp"
 
 using namespace std;
 using namespace boost;
@@ -22,7 +24,16 @@ void execute(char **str){
                 pid_t pid;
 
                 int status;
-                if((pid = fork()) < 0){
+		
+		testToken tok;		
+
+		if (strcmp(str[0], "exit") == 0){
+                        exit(EXIT_SUCCESS);
+                }
+		else if(strcmp(str[0], "test") == 0){
+			tok.test(str);
+		}
+                else if((pid = fork()) < 0){
                         std::cout << "ERROR: forking process failed\n";
                         exit(1);
                 }
@@ -37,6 +48,7 @@ void execute(char **str){
                 }
 }
 void run(char **input, bool, bool);
+void delarray(char **arr);
 int main() {
         string userInput;
         while(1){
@@ -44,9 +56,9 @@ int main() {
                 getline(cin, userInput);
                 char *arg[1024];
                 Tokenizer(userInput, arg);
-                if (strcmp(arg[0], "exit") == 0){
-                        exit(EXIT_SUCCESS);
-                }
+ //               if (strcmp(arg[0], "exit") == 0){
+   //                     exit(EXIT_SUCCESS);
+     //           }
                 int i = 0;
 		bool nvalue = true;
 		bool orvalue = true;
@@ -55,7 +67,6 @@ int main() {
                         i++;
              	}*/
 		run(arg, nvalue, orvalue);
-               
 	}
         return 0;
 }
@@ -94,16 +105,88 @@ void run(char **argv, bool nvalue, bool orvalue)
 	cmdToken cmd;
 	smcolonToken sm;
 	parenToken paren;
+	testToken tes;
+	bracketToken brack;
 
 	int i;
 	int k;
 
-	if(((cmd.isExist(argv, 0)) == true || (pnd.isExist(argv, 0)) == true || (paren.isExist(argv, 0)) == true) && (nswitch == true && orswitch == true)){
+	if(((cmd.isExist(argv, 0)) == true || (pnd.isExist(argv, 0)) == true || (paren.isExist(argv, 0)) == true || (brack.isExist(argv, 0)) == true) && (nswitch == true && orswitch == true)){
 		for(i = 0; argv[i] != NULL; ++i){
 			if((pnd.isExist(argv, i)) == true){
 				pnd.logic(argv, temp);
 				execute(argv);
 				return;
+			}
+			else if ((brack.isExist(argv, i)) == true) {
+				if(brack.isappropriate(argv) == false) {
+					brack.perror();
+					brack.logic(argv, temp);
+                                	if (temp[0] != NULL) {
+                                        	if (nd.isExist(temp, 0) == true) {
+                                                	nswitch = false;
+                                                	for (k = 0; temp[k] != NULL; k++) {
+                                                        	temp[k] = temp[k + 1];
+                                                	}
+                                                	temp[k + 1] = NULL;
+                                        	}
+                                        	else if (rt.isExist(temp, 0) == true) {
+                                                	orswitch = true;
+                                                	for (k = 0; temp[k] != NULL; k++) {
+                                                        	temp[k] = temp[k + 1];
+                                                	}
+                                                	temp[k + 1] = NULL;
+                                        	}
+                                        	else if (sm.isExist(temp, 0) == true) {
+                                                	for (k = 0; temp[k] != NULL; k++) {
+                                                        	temp[k] = temp[k + 1];
+                                                	}
+                                                	temp[k + 1] = NULL;
+                                        	}
+                                	}
+					run(temp, nswitch, orswitch);
+					delarray(temp);
+					return;
+				}
+				else {	
+					brack.logic(argv, temp);
+					if (temp[0] != NULL) {
+                                        	if (nd.isExist(temp, 0) == true) {
+                                                	nswitch = true;
+							if(argv[1] != NULL) {
+								if (strcmp(argv[0], test[0]) == 0 && (tes.found(argv) == false || tes.tiscorrect(argv) == false)) {
+                                        				nswitch = false;
+                            					}
+							}
+                                                	for (k = 0; temp[k] != NULL; k++) {
+                                                        	temp[k] = temp[k + 1];
+                                                	}
+                                                	temp[k + 1] = NULL;
+                                        	}
+                                        	else if (rt.isExist(temp, 0) == true) {
+                                                	orswitch = false;
+							if(argv[1] != NULL) {
+								if (strcmp(argv[0], test[0]) == 0 && (tes.found(argv) == false || tes.tiscorrect(argv) == false)) {
+                                        				orswitch = true;
+                                				}
+							}
+                                                	for (k = 0; temp[k] != NULL; k++) {
+                                                        	temp[k] = temp[k + 1];
+                                                	}
+                                                	temp[k + 1] = NULL;
+                                        	}
+                                        	else if (sm.isExist(temp, 0) == true) {
+                                                	for (k = 0; temp[k] != NULL; k++) {
+                                                        	temp[k] = temp[k + 1];
+                                                	}
+                                                	temp[k + 1] = NULL;
+                                        	}
+                                	}	
+					execute(argv);
+					run(temp, nswitch, orswitch);
+					delarray(temp);
+					return;
+				}
 			}
 			else if ((paren.isExist(argv, i)) == true) {
 				paren.logic(argv, temp);
@@ -174,8 +257,13 @@ void run(char **argv, bool nvalue, bool orvalue)
 		//		}
 		//		else {
 				execute(argv);
-				if (strcmp(argv[0], invalid[0]) == 0 && strcmp(argv[1], invalid[1]) == 0) {
-					nswitch = false;
+				if(argv[1] != NULL) {
+					if (strcmp(argv[0], invalid[0]) == 0 && strcmp(argv[1], invalid[1]) == 0) {
+						nswitch = false;
+					}
+					else if (strcmp(argv[0], test[0]) == 0 && tes.found(argv) == false) {
+						nswitch = false;
+					}
 				}				
 				run(temp, nswitch, orswitch);
 				delarray(temp);
@@ -192,9 +280,14 @@ void run(char **argv, bool nvalue, bool orvalue)
 				rt.logic(argv, temp);
 				execute(argv);
 				orswitch = false;
-				if( strcmp(argv[0], invalid[0]) == 0 && strcmp(argv[1], invalid[1]) == 0){
-                                        orswitch = true;
-                                }
+				if (argv[1] != NULL) {
+					if( strcmp(argv[0], invalid[0]) == 0 && strcmp(argv[1], invalid[1]) == 0){
+                                        	orswitch = true;
+                                	}
+					else if (strcmp(argv[0], test[0]) == 0 && tes.found(argv) == false) {
+						orswitch = true;
+					}
+				}
 				run(temp, nswitch, orswitch);
 				delarray(temp);
 				return;
