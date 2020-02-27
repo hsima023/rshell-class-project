@@ -56,16 +56,16 @@ int main() {
                 getline(cin, userInput);
                 char *arg[1024];
                 Tokenizer(userInput, arg);
- //               if (strcmp(arg[0], "exit") == 0){
-   //                     exit(EXIT_SUCCESS);
-     //           }
+              //  if (strcmp(arg[0], "exit") == 0){
+                //        exit(EXIT_SUCCESS);
+              //  }
                 int i = 0;
 		bool nvalue = true;
 		bool orvalue = true;
-                /*while (arg[i] != NULL) {
-                       cout << arg[i] << endl;
-                        i++;
-             	}*/
+               // while (arg[i] != NULL) {
+                 //      cout << arg[i] << endl;
+                   //     i++;
+             //	}
 		run(arg, nvalue, orvalue);
 	}
         return 0;
@@ -194,14 +194,16 @@ void run(char **argv, bool nvalue, bool orvalue)
 				run(argv, nswitch, orswitch);
 				if (temp[0] != NULL) {
 					if (nd.isExist(temp, 0) == true) {
-                                                nswitch = true;
-                                                for (k = 0; temp[k] != NULL; k++) {
+                                                orswitch = false;
+                                                if( nswitch == false) {
+                                                        orswitch = true;
+                                                }
+						for (k = 0; temp[k] != NULL; k++) {
                                                         temp[k] = temp[k + 1];
                                                 }
                                                 temp[k + 1] = NULL;
                                         }
                                         else if (rt.isExist(temp, 0) == true) {
-                                                orswitch = false;
                                                 for (k = 0; temp[k] != NULL; k++) {
                                                         temp[k] = temp[k + 1];
                                                 }
@@ -293,9 +295,19 @@ void run(char **argv, bool nvalue, bool orvalue)
 				return;
 			}
 		}
-		//if (argv[i] = NULL) {
-			execute(argv);
-		//}
+
+		execute(argv);
+		if (argv[1] != NULL) {
+                	if( strcmp(argv[0], invalid[0]) == 0 && strcmp(argv[1], invalid[1]) == 0){
+                        	orswitch = true;
+                                nswitch = false;
+                        }
+                       	else if (strcmp(argv[0], test[0]) == 0 && tes.found(argv) == false) {
+                         	orswitch = true;
+                               	nswitch = false;
+                      	}
+        	}
+		return;
 	}
 	else if ((cmd.isExist(argv, 0)) == false && nswitch == true && orswitch == true) {
 		perror(argv);
@@ -326,7 +338,10 @@ void run(char **argv, bool nvalue, bool orvalue)
 		while(argv[z] != NULL){
 			if(rt.isExist(argv, z)){
 				rt.logic(argv, temp);
-				orswitch = false;
+				if(nswitch == false){
+					orswitch = true;
+					nswitch = true;
+				}	 
 				run (temp, nswitch, orswitch);
 				delarray(temp);
 				return;
@@ -352,8 +367,7 @@ void run(char **argv, bool nvalue, bool orvalue)
 			z++;
 		}
 		if (argv[z] == NULL && (orswitch == false || nswitch == false)) {
-		//cout << "ERROR: Invalid Command!"<< endl;
-		return;
+			return;
 		}
 		//execute(argv);
 		k = 0;
