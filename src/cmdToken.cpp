@@ -3,16 +3,18 @@
 
 #include "token.hpp"
 #include <iostream>
+#include <string.h>
 
 class cmdToken: public Token {
 	public:
 	bool isExist(char **argv, int num)
 	{
 		bool equal = false;
-		const char *Search[] = { "ls" , "mkdir" , "echo" , "git", "rm"};
+		const char *Search[] = { "ls" , "mkdir" , "echo" , "git", "rm" , "test" , "exit"};
 		int ind = num;
-		for(int i = 0; i < 5; i++){
-			if(*Search[i] == *argv[ind]){
+		for(int i = 0; i < 7; i++){
+	//		if(*Search[i] == *argv[ind]){
+			if(strcmp(Search[i], argv[num]) == 0){
 				equal = true;
 				break;
 			}
