@@ -91,7 +91,9 @@ void run(char **argv, bool nvalue, bool orvalue)
 		for(i = 0; argv[i] != NULL; ++i){
 			if((pnd.isExist(argv, i)) == true){
 				pnd.logic(argv, temp);
-				execute(argv);
+				if (argv[0] != NULL) {
+					execute(argv);
+				}
 				return;
 			}
 			else if ((brack.isExist(argv, i)) == true) {
@@ -170,7 +172,7 @@ void run(char **argv, bool nvalue, bool orvalue)
 				if (temp[0] != NULL) {
 					if (nd.isExist(temp, 0) == true) {
                                                 orswitch = false;
-                                                if( nswitch == false) {
+                                                if(nswitch == false) {
                                                         orswitch = true;
                                                 }
 						for (k = 0; temp[k] != NULL; k++) {
