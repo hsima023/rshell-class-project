@@ -170,12 +170,22 @@ void run(char **argv, bool nvalue, bool orvalue)
 			else if ((paren.isExist(argv, i)) == true) {
 				paren.logic(argv, temp);
 				run(argv, nswitch, orswitch);
+				for (int m = 0; argv[m] != NULL; ++m) {
+                                        if (argv[m + 1] != NULL) {
+                                                if (strcmp(argv[m], invalid[0]) == 0 && strcmp(argv[m + 1], invalid[1]) == 0) {
+                                                        nswitch = false;
+                                                        orswitch = true;
+                                                        break;
+                                                }
+                                                else if (strcmp(argv[m], test[0]) == 0 && tes.found(argv) == false) {
+                                                        nswitch = false;
+                                                        orswitch = true;
+                                                        break;
+                                                }
+                                        }
+                                }
 				if (temp[0] != NULL) {
 					if (nd.isExist(temp, 0) == true) {
-                                                orswitch = false;
-                                                if(nswitch == false) {
-                                                        orswitch = true;
-                                                }
 						for (k = 0; temp[k] != NULL; k++) {
                                                         temp[k] = temp[k + 1];
                                                 }

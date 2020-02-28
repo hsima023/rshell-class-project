@@ -114,7 +114,7 @@ TEST (TestParenAnd, CmdEvaluate) {
         testing::internal::CaptureStdout();
         run(arg, nvalue, orvalue);
         std::string output = testing::internal::GetCapturedStdout();
-        EXPECT_EQ(output, "A\n(true)\nB\n");
+        EXPECT_EQ(output, "A\n(True)\nB\n");
 }
 
 TEST (BracketAnd, CmdEvaluate) {
@@ -130,7 +130,7 @@ TEST (BracketAnd, CmdEvaluate) {
         testing::internal::CaptureStdout();
         run(arg, nvalue, orvalue);
         std::string output = testing::internal::GetCapturedStdout();
-        EXPECT_EQ(output, "(true)\nB\n");
+        EXPECT_EQ(output, "(True)\nB\n");
 }
 
 TEST (BracketErrorAnd, CmdEvaluate) {
@@ -146,7 +146,7 @@ TEST (BracketErrorAnd, CmdEvaluate) {
         testing::internal::CaptureStdout();
         run(arg, nvalue, orvalue);
         std::string output = testing::internal::GetCapturedStdout();
-        EXPECT_EQ(output, "(false)\n");
+        EXPECT_EQ(output, "(False)\n");
 }
 
 TEST (ParenAndOr2, CmdEvaluate) {
@@ -178,7 +178,7 @@ TEST (ParenTestAnd, CmdEvaluate) {
         testing::internal::CaptureStdout();
         run(arg, nvalue, orvalue);
         std::string output = testing::internal::GetCapturedStdout();
-        EXPECT_EQ(output, "(true)\nA\nC\n");
+        EXPECT_EQ(output, "(True)\nA\nC\n");
 }
 
 TEST (ParenTestFailOr, CmdEvaluate) {
@@ -194,7 +194,7 @@ TEST (ParenTestFailOr, CmdEvaluate) {
         testing::internal::CaptureStdout();
         run(arg, nvalue, orvalue);
         std::string output = testing::internal::GetCapturedStdout();
-        EXPECT_EQ(output, "(false)\nA\nC\n");
+        EXPECT_EQ(output, "(False)\nA\nC\n");
 }
 
 TEST (FailParenAnd, CmdEvaluate) {
