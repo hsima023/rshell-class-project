@@ -11,7 +11,7 @@ Hans Simanjuntak | 862155474
 This program will be able to print a command prompt, read in a line of commands and connectors, execute commands (fork, execvp, waitpid, implemented test function), and continue to do so until it exits. Inputs will be ingested using getline. It will then be separated in a tokenizer class and each separated string will be made into tokens. Then, they will be pushed onto an array of tokens where it will be taken in by an executor class where each command will be executed.
 
 # Diagram
-![OMT DIAGRAM]([images/Updated_OMT_Diagram2.png])
+![OMT DIAGRAM](https://github.com/cs100/assignment-jdhs/blob/master/images/Updated_OMT_Diagram2.png?raw=true)
 
 # Classes
 1. class Tokenizer: Takes in a string argument, separates string, creates tokens, and returns an array of tokens.
