@@ -126,6 +126,7 @@ void run(char **argv, bool nvalue, bool orvalue)
 				}
 				else {	
 					brack.logic(argv, temp);
+					run(argv, nswitch, orswitch);
 					if (temp[0] != NULL) {
                                         	if (nd.isExist(temp, 0) == true) {
                                                 	nswitch = true;
@@ -158,7 +159,7 @@ void run(char **argv, bool nvalue, bool orvalue)
                                                 	temp[k + 1] = NULL;
                                         	}
                                 	}	
-					execute(argv);
+			//		execute(argv);
 					run(temp, nswitch, orswitch);
 					delarray(temp);
 					return;
