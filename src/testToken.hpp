@@ -93,10 +93,10 @@ class testToken: public Token {
                         cout << "-bash: test: " << str[1] << ": unary operator expected" <<endl;
                 }
 		else if(found(str)){
-			cout << "(true)" <<endl;
+			cout << "(True)" <<endl;
 		}
 		else {
-			cout << "(false)" <<endl ;
+			cout << "(False)" <<endl ;
 		}
 	}
 };
