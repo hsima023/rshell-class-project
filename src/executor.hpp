@@ -169,13 +169,43 @@ void run(char **argv, bool nvalue, bool orvalue)
 			}
 			else if ((paren.isExist(argv, i)) == true) {
 				paren.logic(argv, temp);
+				bool orswitch2 = false;
+				bool nswitch2 = nswitch;
+				for (int m = 0; argv[m] != NULL; ++m) {
+                                        if (argv[m + 1] != NULL) {
+                                                if (strcmp(argv[m], invalid[0]) == 0 && strcmp(argv[m + 1], invalid[1]) == 0) {
+                                                        orswitch2 = true;
+                                                        break;
+                                                }
+                                                else if (strcmp(argv[m], test[0]) == 0 && tes.found(argv) == false) {
+                                                        orswitch2 = true;
+                                                        break;
+                                                }
+                                        }
+                                }
 				run(argv, nswitch, orswitch);
+				orswitch = orswitch2;
+				nswitch = nswitch2;
+				/*for (int m = 0; argv[m] != NULL; ++m) {
+                                        if (argv[m + 1] != NULL) {
+                                                if (strcmp(argv[m], invalid[0]) == 0 && strcmp(argv[m + 1], invalid[1]) == 0) {
+                                                        orswitch = true;
+                                                        break;
+                                                }
+                                                else if (strcmp(argv[m], test[0]) == 0 && tes.found(argv) == false) {
+                                                        orswitch = true;
+                                                        break;
+                                                }
+                                        }
+                                }*/
 				if (temp[0] != NULL) {
 					if (nd.isExist(temp, 0) == true) {
-                                                orswitch = false;
-                                                if(nswitch == false) {
-                                                        orswitch = true;
-                                                }
+						if (orswitch == true) {
+							nswitch = false;
+						}
+						else {
+							orswitch = true;
+						}
 						for (k = 0; temp[k] != NULL; k++) {
                                                         temp[k] = temp[k + 1];
                                                 }
@@ -188,6 +218,8 @@ void run(char **argv, bool nvalue, bool orvalue)
                                                 temp[k + 1] = NULL;
                                         }
                                         else if (sm.isExist(temp, 0) == true) {
+						orswitch = true;
+						nswitch = true;
                                                 for (k = 0; temp[k] != NULL; k++) {
                                                         temp[k] = temp[k + 1];
                                                 }

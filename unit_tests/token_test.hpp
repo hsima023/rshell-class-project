@@ -207,7 +207,7 @@ TEST(TestFuncTest, TokEvaluate) {
         testing::internal::CaptureStdout();
         tes.test(arg);
         std::string output = testing::internal::GetCapturedStdout();
-        EXPECT_EQ(output, "(false)\n");
+        EXPECT_EQ(output, "(False)\n");
 }
 
 TEST(ExecFuncTest, TokEvaluate) {

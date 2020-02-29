@@ -86,7 +86,7 @@ TEST (ParenAndOr, CmdEvaluate) {
 }
 
 TEST (ParenSemiOr, CmdEvaluate) {
-        string input = {"(echo Hello World; (echo Hi || echo Bye)"};
+        string input = {"(echo Hello World); (echo Hi || echo Bye)"};
         char *arg[1024];
 
         Tokenizer(input, arg);
@@ -114,7 +114,7 @@ TEST (TestParenAnd, CmdEvaluate) {
         testing::internal::CaptureStdout();
         run(arg, nvalue, orvalue);
         std::string output = testing::internal::GetCapturedStdout();
-        EXPECT_EQ(output, "A\n(true)\nB\n");
+        EXPECT_EQ(output, "A\n(True)\nB\n");
 }
 
 TEST (BracketAnd, CmdEvaluate) {
@@ -130,7 +130,7 @@ TEST (BracketAnd, CmdEvaluate) {
         testing::internal::CaptureStdout();
         run(arg, nvalue, orvalue);
         std::string output = testing::internal::GetCapturedStdout();
-        EXPECT_EQ(output, "(true)\nB\n");
+        EXPECT_EQ(output, "(True)\nB\n");
 }
 
 TEST (BracketErrorAnd, CmdEvaluate) {
@@ -146,7 +146,7 @@ TEST (BracketErrorAnd, CmdEvaluate) {
         testing::internal::CaptureStdout();
         run(arg, nvalue, orvalue);
         std::string output = testing::internal::GetCapturedStdout();
-        EXPECT_EQ(output, "(false)\n");
+        EXPECT_EQ(output, "(False)\n");
 }
 
 TEST (ParenAndOr2, CmdEvaluate) {
@@ -178,7 +178,7 @@ TEST (ParenTestAnd, CmdEvaluate) {
         testing::internal::CaptureStdout();
         run(arg, nvalue, orvalue);
         std::string output = testing::internal::GetCapturedStdout();
-        EXPECT_EQ(output, "(true)\nA\nC\n");
+        EXPECT_EQ(output, "(True)\nA\nC\n");
 }
 
 TEST (ParenTestFailOr, CmdEvaluate) {
@@ -194,7 +194,7 @@ TEST (ParenTestFailOr, CmdEvaluate) {
         testing::internal::CaptureStdout();
         run(arg, nvalue, orvalue);
         std::string output = testing::internal::GetCapturedStdout();
-        EXPECT_EQ(output, "(false)\nA\nC\n");
+        EXPECT_EQ(output, "(False)\nA\nC\n");
 }
 
 TEST (FailParenAnd, CmdEvaluate) {
@@ -211,6 +211,87 @@ TEST (FailParenAnd, CmdEvaluate) {
         run(arg, nvalue, orvalue);
         std::string output = testing::internal::GetCapturedStdout();
         EXPECT_EQ(output, "");
+}
+
+TEST (ParenOrError, CmdEvaluate) {
+	string input = {"(ls -j && echo A) || echo B"};
+        char *arg[1024];
+
+        Tokenizer(input, arg);
+
+        bool nvalue = true;
+        bool orvalue = true;
+
+
+        testing::internal::CaptureStdout();
+        run(arg, nvalue, orvalue);
+        std::string output = testing::internal::GetCapturedStdout();
+        EXPECT_EQ(output, "B\n");
+}
+
+
+TEST (ParenAndError, CmdEvaluate) {
+        string input = {"(ls -j && echo A) && echo B"};
+        char *arg[1024];
+
+        Tokenizer(input, arg);
+
+        bool nvalue = true;
+        bool orvalue = true;
+
+
+        testing::internal::CaptureStdout();
+        run(arg, nvalue, orvalue);
+        std::string output = testing::internal::GetCapturedStdout();
+        EXPECT_EQ(output, "");
+}
+
+TEST (ParenOrCorrect, CmdEvaluate) {
+        string input = {"(echo A) || echo B && echo C"};
+        char *arg[1024];
+
+        Tokenizer(input, arg);
+
+        bool nvalue = true;
+        bool orvalue = true;
+
+
+        testing::internal::CaptureStdout();
+        run(arg, nvalue, orvalue);
+        std::string output = testing::internal::GetCapturedStdout();
+        EXPECT_EQ(output, "A\nC\n");
+}
+
+TEST (ParenAndCorrect, CmdEvaluate) {
+        string input = {"(echo A) && echo B && echo C"};
+        char *arg[1024];
+
+        Tokenizer(input, arg);
+
+        bool nvalue = true;
+        bool orvalue = true;
+
+
+        testing::internal::CaptureStdout();
+        run(arg, nvalue, orvalue);
+        std::string output = testing::internal::GetCapturedStdout();
+        EXPECT_EQ(output, "A\nB\nC\n");
+}
+
+TEST (ParenOrOr, CmdEvaluate) {
+	string input = {"(echo B || ls -j) || echo A"};
+	char *arg[1024];
+
+        Tokenizer(input, arg);
+
+        bool nvalue = true;
+        bool orvalue = true;
+
+
+        testing::internal::CaptureStdout();
+        run(arg, nvalue, orvalue);
+        std::string output = testing::internal::GetCapturedStdout();
+        EXPECT_EQ(output, "B\nA\n");
 }
 
 
