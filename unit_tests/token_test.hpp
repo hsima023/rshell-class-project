@@ -14,67 +14,86 @@
 #include "../src/bracketToken.hpp"
 #include "../src/testToken.hpp"
 #include "../src/parenToken.hpp"
+#include "../src/executor.hpp"
 #include <string.h>
 
 TEST(cmdExistvalue, TokEvaluate) {
-	char *input[2] = { "ls"};
+	string get= "ls";
+	char *input[2];
 	int index = 0;
+	Tokenizer(get, input);
 	cmdToken cmd;
 	EXPECT_EQ(cmd.isExist(input, index), true);
 }
 
 TEST(poundExistvalue, TokEvaluate) {
-        char *input[2] = { "#" };
+        char *input[2];
+	string get = { "#" };
         int index = 0;
+	Tokenizer(get, input);
         poundToken pnd;
         EXPECT_EQ(pnd.isExist(input, index), true);
 }
 
 TEST(quoteExistvalue, TokEvaluate) {
-        char *input[2] = { "\""};
+        char *input[2];
+	string get = { "\""};
         int index = 0;
+	Tokenizer(get, input);
         quoteToken qt;
         EXPECT_EQ(qt.isExist(input, index), true);
 }
 
 TEST(andExistvalue, TokEvaluate) {
-        char *input[2] = { "&&"};
+        char *input[2];
+	string get = { "&&"};
         int index = 0;
+	Tokenizer(get, input);
         andToken ntoken;
         EXPECT_EQ(ntoken.isExist(input, index), true);
 }
 
 TEST(orExistvalue, TokEvaluate) {
-        char *input[2] = { "||"};
+        char *input[2];
+	string get = { "||"};
         int index = 0;
+	Tokenizer(get, input);
         orToken ortoken;
         EXPECT_EQ(ortoken.isExist(input, index), true);
 }
 
 TEST(smcolonExistvalue, TokEvaluate) {
-        char *input[2] = { ";"};
+        char *input[2];
+	string get = { ";"};
         int index = 0;
+	Tokenizer(get, input);
         smcolonToken smcolon;
         EXPECT_EQ(smcolon.isExist(input, index), true);
 }
 
 TEST(parenExistvalue, TokEvaluate) {
-        char *input[2] = { "("};
+        char *input[2];
+	string get = { "("};
         int index = 0;
+	Tokenizer(get, input);
         parenToken paren;
         EXPECT_EQ(paren.isExist(input, index), true);
 }
 
 TEST(bracketExistvalue, TokEvaluate) {
-        char *input[2] = {"["};
+        char *input[2];
+	string get = {"["};
         int index = 0;
+	Tokenizer(get, input);
         bracketToken brack;
         EXPECT_EQ(brack.isExist(input, index), true);
 }
 
 TEST(testExistvalue, TokEvaluate) {
-        char *input[2] = {"test"};
+        char *input[2];
+	string get = {"test"};
         int index = 0;
+	Tokenizer(get, input);
         testToken tes;
         EXPECT_EQ(tes.isExist(input, index), true);
 }
@@ -189,6 +208,16 @@ TEST(TestFuncTest, TokEvaluate) {
         tes.test(arg);
         std::string output = testing::internal::GetCapturedStdout();
         EXPECT_EQ(output, "(false)\n");
+}
+
+TEST(ExecFuncTest, TokEvaluate) {
+        string input = {"echo Hello"};
+        char *arg[10];
+        Tokenizer(input, arg);
+        testing::internal::CaptureStdout();
+       	execute(arg);
+        std::string output = testing::internal::GetCapturedStdout();
+        EXPECT_EQ(output, "Hello\n");
 }
 
 #endif
