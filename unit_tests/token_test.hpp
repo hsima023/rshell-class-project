@@ -220,4 +220,160 @@ TEST(ExecFuncTest, TokEvaluate) {
         EXPECT_EQ(output, "Hello\n");
 }
 
+TEST(isDirValueTest, TrueEvaluate) {
+	string input = {"test -d src"};
+	char *arg[1024];
+	bool value;
+
+	Tokenizer(input, arg);
+	testToken tes;
+	value = tes.isDir(arg, 2);
+	EXPECT_EQ(value, true);
+}
+
+TEST(isDirValueTest, FalseEvaluate) {
+        string input = {"test -d README.md"};
+        char *arg[1024];
+        bool value;
+
+        Tokenizer(input, arg);
+        testToken tes;
+        value = tes.isDir(arg, 2);
+        EXPECT_EQ(value, false);
+}
+
+TEST(isFileValueTest, TrueEvaluate) {
+        string input = {"test -f README.md"};
+        char *arg[1024];
+        bool value;
+
+        Tokenizer(input, arg);
+        testToken tes;
+        value = tes.isFile(arg, 2);
+        EXPECT_EQ(value, true);
+}
+
+TEST(isFileValueTest, FalseEvaluate) {
+        string input = {"test -f src"};
+        char *arg[1024];
+        bool value;
+
+        Tokenizer(input, arg);
+        testToken tes;
+        value = tes.isFile(arg, 2);
+        EXPECT_EQ(value, false);
+}
+TEST(isEfileValueTest, TrueEvaluate) {
+        string input = {"test -e src"};
+        char *arg[1024];
+        bool value;
+
+        Tokenizer(input, arg);
+        testToken tes;
+        value = tes.isEfile(arg, 2);
+        EXPECT_EQ(value, true);
+}
+
+TEST(isEfileValueTest, FalseEvaluate) {
+        string input = {"test -e asdfasj"};
+        char *arg[1024];
+        bool value;
+
+        Tokenizer(input, arg);
+        testToken tes;
+        value = tes.isEfile(arg, 2);
+        EXPECT_EQ(value, false);
+}
+
+TEST(foundValueTest, TrueEvaluate) {
+        string input = {"test src"};
+        char *arg[1024];
+        bool value;
+
+        Tokenizer(input, arg);
+        testToken tes;
+        value = tes.found(arg);
+        EXPECT_EQ(value, true);
+}
+
+TEST(foundValueTest, FalseEvaluate) {
+        string input = {"test asdfasf"};
+        char *arg[1024];
+        bool value;
+
+        Tokenizer(input, arg);
+        testToken tes;
+        value = tes.found(arg);
+        EXPECT_EQ(value, false);
+}
+
+TEST(tiscorrectValueTest, TrueEvaluate) {
+        string input = {"test -e src"};
+        char *arg[1024];
+        bool value;
+
+        Tokenizer(input, arg);
+        testToken tes;
+        value = tes.tiscorrect(arg);
+        EXPECT_EQ(value, true);
+}
+
+TEST(tiscorrectValueTest, FalseEvaluate) {
+        string input = {"test -e echo hello"};
+        char *arg[1024];
+        bool value;
+
+        Tokenizer(input, arg);
+        testToken tes;
+        value = tes.tiscorrect(arg);
+        EXPECT_EQ(value, false);
+}
+
+TEST(testValueTest, TrueEvaluate) {
+        string input = {"test -e src"};
+        char *arg[1024];
+        bool value;
+
+        Tokenizer(input, arg);
+        testToken tes;
+	testing::internal::CaptureStdout();
+        tes.test(arg);
+        std::string output = testing::internal::GetCapturedStdout();
+        EXPECT_EQ(output, "(True)\n");
+}
+
+TEST(testValueTest, FalseEvaluate) {
+        string input = {"test -e asdfasf"};
+        char *arg[1024];
+        bool value;
+
+        Tokenizer(input, arg);
+        testToken tes;
+        testing::internal::CaptureStdout();
+        tes.test(arg);
+        std::string output = testing::internal::GetCapturedStdout();
+        EXPECT_EQ(output, "(False)\n");
+}
+
+TEST(isappropriateValueTest, TrueEvaluate) {
+        string input = {"[ -e src ]"};
+        char *arg[1024];
+        bool value;
+
+        Tokenizer(input, arg);
+        bracketToken brack;
+        value = brack.isappropriate(arg);
+        EXPECT_EQ(value, true);
+}
+
+TEST(isappropriateValueTest, FalseEvaluate) {
+        string input = {"[ -e src && echo hello ]"};
+        char *arg[1024];
+        bool value;
+
+        Tokenizer(input, arg);
+        bracketToken brack;
+        value = brack.isappropriate(arg);
+        EXPECT_EQ(value, false);
+}
 #endif
